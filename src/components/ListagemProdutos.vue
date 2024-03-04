@@ -1,28 +1,26 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-const produtos = ref([]);
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+const produtos = ref([])
 
 onMounted(async () => {
-  const response = await axios.get('https://fakestoreapi.com/products');
-  produtos.value = response.data;
-});
+  const response = await axios.get('https://fakestoreapi.com/products')
+  produtos.value = response.data
+})
 
-const formatPrice = (price) => `R$ ${price.toFixed(2).replace('.', ',')}`;
+const formatPrice = (price) => `R$ ${price.toFixed(2).replace('.', ',')}`
+
+import { useScreen } from '@/composables/screen'
+
+const { browserWidth, deviceWidth, isMobile } = useScreen()
 </script>
 
 <template>
   <div>
-    <h1>Produtos</h1>
-    <div v-for="produto in produtos" :key="produto.id">
-      <h2>{{ produto.title }}</h2>
-      <p>{{ produto.description }}</p>
-      <p>{{ produto.price }}</p>
-      <img :src="produto.image" :alt="produto.title" />
-    </div>
-  </div>
-  <div>
-    <h1>Produtos</h1>
+    <h1>
+      Produtos - {{ browserWidth }} - {{ deviceWidth }} - {{ isMobile }}
+      <span v-if="isMobile">É móvel</span>
+    </h1>
     <div class="container">
       <div class="card" v-for="produto in produtos" :key="produto.id">
         <h1 class="card--title">{{ produto.title }}</h1>
@@ -34,7 +32,7 @@ const formatPrice = (price) => `R$ ${price.toFixed(2).replace('.', ',')}`;
   </div>
 </template>
 
-  <style scoped>
+<style scoped>
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -52,7 +50,9 @@ const formatPrice = (price) => `R$ ${price.toFixed(2).replace('.', ',')}`;
   width: 15rem;
   height: 25rem;
   background: #fff;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.19),
+    0 6px 6px rgba(0, 0, 0, 0.23);
   border-radius: 10px;
   margin: auto;
   overflow: hidden;
@@ -84,6 +84,4 @@ const formatPrice = (price) => `R$ ${price.toFixed(2).replace('.', ',')}`;
     width: 22rem;
   }
 }
-
 </style>
-
